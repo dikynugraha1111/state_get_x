@@ -8,6 +8,7 @@ class OrangGetX extends GetxController {
   void changeName() {
     orangGetX.update((_) {
       orangGetX.value.nama = newName;
+      update();
     });
   }
 }

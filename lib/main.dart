@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:state_get_x/ui/pages/text_pages.dart';
 import './get_x/counter_increament.dart';
 import 'get_x/orang_getx.dart';
+import 'ui/widgets/name_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,10 +18,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => MaterialApp(
-          theme: counterI.isDark.value ? ThemeData.dark() : ThemeData.light(),
-          home: MyHomePage(),
-        ));
+    return Obx(
+      () => GetMaterialApp(
+        theme: counterI.isDark.value ? ThemeData.dark() : ThemeData.light(),
+        home: MyHomePage(),
+      ),
+    );
   }
 }
 
@@ -44,14 +48,20 @@ class MyHomePage extends StatelessWidget {
               },
               child: const Text("GANTI TEMA"),
             ),
-            Obx(
-              () => Text("Your Name ${orangGetX.orangGetX.value.nama}"),
-            ),
+            NameWidget(),
             ElevatedButton(
               onPressed: () {
                 orangGetX.changeName();
               },
               child: const Text("GANTI NAMA"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Get.to(
+                  () => TextPages(),
+                );
+              },
+              child: const Text("Pindah Halaman"),
             ),
           ],
         ),
