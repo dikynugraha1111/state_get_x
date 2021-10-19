@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import './get_x/counter_increament.dart';
+import 'get_x/orang_getx.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   final CounterIncreament counterI = Get.put(CounterIncreament());
+  final OrangGetX orangGetX = Get.put(OrangGetX());
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,8 @@ class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
 
   final CounterIncreament ci1 = Get.find();
+  final OrangGetX orangGetX = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +43,16 @@ class MyHomePage extends StatelessWidget {
                 ci1.changeTheme();
               },
               child: const Text("GANTI TEMA"),
-            )
+            ),
+            Obx(
+              () => Text("Your Name ${orangGetX.orangGetX.value.nama}"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                orangGetX.changeName();
+              },
+              child: const Text("GANTI NAMA"),
+            ),
           ],
         ),
       ),
