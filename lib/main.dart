@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:state_get_x/routes/name_routes.dart';
+import 'package:state_get_x/routes/page_routes.dart';
 import 'package:state_get_x/ui/pages/text_pages.dart';
 import './get_x/counter_increament.dart';
 import 'get_x/orang_getx.dart';
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
     return Obx(
       () => GetMaterialApp(
         theme: counterI.isDark.value ? ThemeData.dark() : ThemeData.light(),
+        initialRoute: "/",
+        getPages: PageRoutes.pageRoutes,
         home: MyHomePage(),
       ),
     );
@@ -38,6 +42,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Obx(
               () => Text("Angka ${ci1.counter}"),
@@ -55,13 +60,12 @@ class MyHomePage extends StatelessWidget {
               },
               child: const Text("GANTI NAMA"),
             ),
+            const SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
-                Get.to(
-                  () => TextPages(),
-                );
+                Get.toNamed(NameRoutes.page_2);
               },
-              child: const Text("Pindah Halaman"),
+              child: const Text("Get To Page 2 With Named"),
             ),
           ],
         ),
