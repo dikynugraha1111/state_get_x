@@ -23,7 +23,19 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const Center(child: Text("Home")),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Get.snackbar(
+              "Ini Judul",
+              "Ini Pesan",
+              animationDuration: const Duration(milliseconds: 500),
+              snackStyle: SnackStyle.FLOATING,
+            );
+          },
+          child: const Text("Snack"),
+        ),
+      ),
     );
   }
 }
