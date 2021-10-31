@@ -23,7 +23,40 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const Center(child: Text("Home")),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Noted Menggunakan Default
+            Get.defaultDialog(
+              title: "Default",
+              middleText: "Ini isinya boi",
+              textConfirm: "Iya",
+              onConfirm: () {},
+              cancel: ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text("Tidak"),
+              ),
+            );
+
+            // Noted dengan menggunakan Widget, Contoh saja menggunakan Custom Dialog Dulu
+            Get.dialog(
+              AlertDialog(
+                title: const Text("Hallo"),
+                content: const Text("Isi konten"),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text("Tekan Ya"),
+                  )
+                ],
+              ),
+            );
+          },
+          child: const Text("Show Dialog"),
+        ),
+      ),
     );
   }
 }
