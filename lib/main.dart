@@ -1,41 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:state_get_x/get_x/count_getx.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  final cText = Get.lazyPut(
+    () => CountController(),
+    tag: "conText",
+    fenix: true,
+  );
+
+  final cNum = Get.put(CountController(), tag: "conNum");
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(home: MyHomePage());
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(),
+    );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
+  final cCountNum = Get.find<CountController>(tag: "conNum");
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.to(
+                () => TextInput(),
+              );
+            },
+            icon: const Icon(Icons.forward),
+          )
+        ],
+      ),
+      body: Center(
+        child: Obx(
+          () => Text(
+            "${cCountNum.number}",
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          cCountNum.addNumber();
+        },
+      ),
+    );
+  }
+}
+
+class TextInput extends StatelessWidget {
+  TextInput({Key? key}) : super(key: key);
+
+  final cText = Get.find<CountController>(tag: "conText");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Get.bottomSheet(
-              ListView(
-                children: const [
-                  Text("Hello"),
-                ],
-              ),
-              backgroundColor: Colors.white,
-            );
-          },
-          child: const Text("Bottom Sheet"),
+        child: TextField(
+          controller: cText.cText,
+          decoration: const InputDecoration(
+            label: Text("Masukan Text"),
+          ),
         ),
       ),
     );
