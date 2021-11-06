@@ -15,8 +15,6 @@ class MyApp extends StatelessWidget {
     fenix: true,
   );
 
-  final cNum = Get.put(CountController(), tag: "conNum");
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -29,7 +27,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
 
-  final cCountNum = Get.find<CountController>(tag: "conNum");
+  final cNum = Get.put(CountController(), tag: "conNum", permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +47,13 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: Obx(
           () => Text(
-            "${cCountNum.number}",
+            "${cNum.number}",
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          cCountNum.addNumber();
+          cNum.addNumber();
         },
       ),
     );
