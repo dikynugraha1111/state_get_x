@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:state_get_x/get_x/count_getx.dart';
+import 'package:state_get_x/shared/page_app.dart';
+import 'package:state_get_x/shared/routes_app.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
 
   final cText = Get.lazyPut(
     () => CountController(),
-    tag: "conText",
+    tag: "controller-text",
     fenix: true,
   );
 
@@ -19,7 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      initialRoute: RoutesApp.home,
+      getPages: PageApp.pageRoutes,
     );
   }
 }
@@ -27,7 +30,8 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
 
-  final cNum = Get.put(CountController(), tag: "conNum", permanent: true);
+  final cNum =
+      Get.put(CountController(), tag: "controller-num", permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +40,7 @@ class MyHomePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Get.to(
-                () => TextInput(),
-              );
+              Get.toNamed(RoutesApp.number);
             },
             icon: const Icon(Icons.forward),
           )
@@ -48,31 +50,6 @@ class MyHomePage extends StatelessWidget {
         child: Obx(
           () => Text(
             "${cNum.number}",
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          cNum.addNumber();
-        },
-      ),
-    );
-  }
-}
-
-class TextInput extends StatelessWidget {
-  TextInput({Key? key}) : super(key: key);
-
-  final cText = Get.find<CountController>(tag: "conText");
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: TextField(
-          controller: cText.cText,
-          decoration: const InputDecoration(
-            label: Text("Masukan Text"),
           ),
         ),
       ),
