@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:state_get_x/getx/controller_getx.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Get.putAsync<SharedPreferences>(() async {
+    SharedPreferences setShare = await SharedPreferences.getInstance();
+    await setShare.setInt("num", 99);
+    return setShare;
+  });
+
   runApp(const MyApp());
 }
 
@@ -12,18 +21,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(home: MyHomePage());
+    return GetMaterialApp(home: MyHomePage());
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
+  final cSpref = Get.put(ControllerGetX());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const Center(child: Text("Home")),
+      body: Center(
+        child: Obx(() => Text("${cSpref.num}")),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => cSpref.setData(),
+      ),
     );
   }
 }
