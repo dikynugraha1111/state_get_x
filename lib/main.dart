@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:state_get_x/ui/hitungan.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,14 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const Center(child: Text("Home")),
+      body: Center(
+        child: TextButton(
+          onPressed: () => Get.to(
+            Hitungan(),
+          ),
+          child: const Text("Home"),
+        ),
+      ),
     );
   }
 }
